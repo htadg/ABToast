@@ -8,7 +8,7 @@ ABToast requires [Django](https://www.djangoproject.com/download/) to run.
 
 Get ABToast locally
 ```sh
-$ git clone https://github.com/htadg/ABToast.git ABToaster
+$ git clone https://github.com/htadg/ABToast.git ABToast
 ```
 Add ABToast to INSTALLED_APPS
 ```sh

@@ -11,7 +11,7 @@ Get ABToast locally
 $ git clone https://github.com/htadg/ABToast.git ABToast
 ```
 Add ABToast to INSTALLED_APPS
-```sh
+```python
 INSTALLED_APPS = (
     # Django Default Apps
     'django.contrib.admin',
@@ -21,7 +21,7 @@ INSTALLED_APPS = (
 )
 ```
 Add ABToast.middleware.ABMiddleware to the project middlewares
-```sh
+```python
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -37,7 +37,7 @@ $ python migrate
 $ python manage.py createsuperuser
 ```
 Now Create new Tests in the Database
-```sh
+```python
 from ABToast.models import Experiment, Test
 
 # Create an Experiment
@@ -52,7 +52,7 @@ Test.objects.create(template_name="index.htmregistraions/signup.html",)
 Test.objects.create(template_name="registraions/new_signup.html", experiment=exp)
 ```
 Now You can run A/B Test on a view
-```sh
+```python
 def home(request, template_name="registrations/signup.html"):
     try:
         template_name = request.ab.run(template_name)

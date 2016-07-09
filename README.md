@@ -33,10 +33,10 @@ MIDDLEWARE_CLASSES = (
 Migrate the database and create admin account
 ```sh
 $ python manage.py makemigrations
-$ python migrate
+$ python manage.py migrate
 $ python manage.py createsuperuser
 ```
-Now Create new Tests in the Database
+Now Create your own new Tests in the Database
 ```python
 from ABToast.models import Experiment, Test
 

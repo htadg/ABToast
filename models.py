@@ -18,9 +18,9 @@ class Experiment(CreationModificationDateMixin, UrlMixin):
     goal = models.CharField(max_length=255, unique=True,
                             help_text=_("Example : '/main/signup_complete'. The path on goal Completion"))
     start = models.DateField(blank=False, db_index=True,
-                             help_text=_("This Test starts at UTC +12:00 at the selected Date."))
+                             help_text=_("This Test starts at UTC +00:00 at the selected Date."))
     end = models.DateField(blank=False, null=True,
-                           help_text=_("This Test ends at UTC +12:00 at the selected Date."))
+                           help_text=_("This Test ends at UTC +00:00 at the selected Date."))
     percentage = models.PositiveIntegerField(_("Traffic Percentage"), validators=[MaxValueValidator(100), ], default=50,
                                              help_text=_("Percentage of traffic to redirect to Variant B"))
     is_active = models.BooleanField(_("Active"), default=False)

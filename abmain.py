@@ -1,7 +1,5 @@
-import datetime
 import random
 
-from django.template import TemplateDoesNotExist
 from .models import Experiment, Test
 
 
@@ -24,12 +22,12 @@ class AB(object):
         return "converted" in self.request.session[self.get_experiment_key(exp)]
 
     def get_traffic(self, percentage):
-        return 0 if random.random() < percentage else 1
+        return 0 if random.random() <= percentage else 1
 
     def get_test(self, exp):
         tests = exp.test_set.all()
-        self.update_traffic(exp)
-        test_index = self.get_traffic(exp.percentage / 100)
+        test_index = self.get_traffic(exp.percentage / 100.0)
+        print test_index
         test = tests[test_index]
         return test
 
@@ -39,34 +37,12 @@ class AB(object):
     def get_experiment(self, template_name):
         return Experiment.objects.get(template_name=template_name)
 
-    def update_traffic(self, exp):
-        test_1, test_2 = exp.test_set.all()
-        if test_1.hits >=5 and test_2.hits >=5 and test_1.conversions >= 1 and test_2.conversions >=1:
-            test_1_ratio = float(test_1.conversions) / test_1.hits
-            test_2_ratio = float(test_2.conversions) / test_2.hits
-            updated_traffic = int(test_2_ratio * 100/(test_1_ratio + test_2_ratio))
-            return updated_traffic
-        else:
-            return 50
-
     def run(self, template_name):
         try:
             exp = self.get_experiment(template_name)
         except Experiment.DoesNotExist:
             return template_name
-        print exp.template_name
 
-        # start_date = datetime.datetime.strptime(exp.start, "%Y-%m-%d")
-        # end_date = datetime.datetime.strptime(exp.end, "%Y-%m-%d")
-
-        start_date = exp.start
-        end_date = exp.end
-
-        if start_date > datetime.date.today() or end_date < datetime.date.today():
-            if exp.is_active:
-                exp.is_active = False
-                exp.save()
-            return template_name
         if not exp.is_active:
             return template_name
 

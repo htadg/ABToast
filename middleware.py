@@ -40,8 +40,9 @@ class ABMiddleware:
         if request.ab.is_active():
             exps = Experiment.objects.all()
             for exp in exps:
-                exp.percentage = get_updated_traffic(exp)
                 exp.is_active = get_status(exp)
+                if exp.is_active:
+                    exp.percentage = get_updated_traffic(exp)
                 exp.save()
                 if request.ab.is_converted(exp):
                     request.ab.convert(exp)

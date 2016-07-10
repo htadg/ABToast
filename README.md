@@ -27,7 +27,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     '...',
     # Custom Middleware
-    'abtest.middleware.ABMiddleware',
+    'ABToast.middleware.ABMiddleware',
 )
 ```
 Migrate the database and create admin account

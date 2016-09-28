@@ -69,9 +69,9 @@ Do the necessary changes that you feel and send a pull request.
 
 ### Todos
 
- - Multivariate Testing
- - Add Graphical Information
- - Add Bayesian Formula for the Conversion Rates
+ - [ ] Multivariate Testing
+ - [ ] Add Graphical Information
+ - [ ] Add Bayesian Formula for the Conversion Rates
 
 License
 ----

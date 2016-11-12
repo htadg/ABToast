@@ -6,10 +6,15 @@ ABToast is a simple A/B Testing app that is developed in django. This app implem
 
 ABToast requires [Django](https://www.djangoproject.com/download/) to run.
 
-Get ABToast locally
+Install ABToast from pip
+```sh
+$ pip install django-abtoast
+```
+OR, Get ABToast locally
 ```sh
 $ git clone https://github.com/htadg/ABToast.git ABToast
 ```
+
 Add ABToast to INSTALLED_APPS
 ```python
 INSTALLED_APPS = (

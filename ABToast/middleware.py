@@ -1,6 +1,8 @@
 from datetime import date
 from threading import local
 
+from django.utils.deprecation import MiddlewareMixin
+
 from .abmain import AB
 from .models import Experiment
 
@@ -33,7 +35,7 @@ def get_status(exp):
     return active
 
 
-class ABMiddleware:
+class ABMiddleware(MiddlewareMixin):
     def process_request(self, request):
         _thread_locals.request = request
         request.ab = AB(request)

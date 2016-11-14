@@ -59,7 +59,7 @@ start_date = date.today()
 end_date = start_date + relativedelta(months=+2)
 
 # Create an Experiment
-exp = Experiment.objects.create(name="Homepage Test", template_name="registraions/signup.html", goal="registrations/success", start=start_date, end=end_date, is_active=True)
+exp = Experiment.objects.create(name="Homepage Test", template_name="registrations/signup.html", goal="registrations/success", start=start_date, end=end_date, is_active=True)
 
 # Create two variations of the homepage.
 

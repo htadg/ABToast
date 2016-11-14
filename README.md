@@ -46,23 +46,27 @@ Now Create your own new Tests in the Database
 Note: You can also create New Experiment and Tests from the Django Admin Panel
 ```
 ```python
-from datetime import date
+from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 from ABToast.models import Experiment, Test
 
 
 # Starting the Experiment from today
-start_date = date.today()
+start_date = datetime.now()
 # End Date for the Experiment
 # Experiment runs for two months
 end_date = start_date + relativedelta(months=+2)
 
+# Initial Traffic Redirect for the first variant
+initial_traffic = 50 # 50%
+
 # Create an Experiment
-exp = Experiment.objects.create(name="Homepage Test", template_name="registraions/signup.html", goal="registrations/success", start=start_date, end=end_date, is_active=True)
+exp = Experiment.objects.create(name="Homepage Test", template_name="registraions/signup.html", goal="registrations/success", start=start_date, end=end_date, percentage=initial_traffic, is_active=True)
 
 # Create two variations of the homepage.
-
+# Currently User can only create two Test instances for a particular Experiment
+# which means currently user can run A/B Testing on only two variants of a Page
 # One Test for the original template
 Test.objects.create(template_name="registraions/signup.html", experiment=exp)
 

@@ -64,10 +64,10 @@ exp = Experiment.objects.create(name="Homepage Test", template_name="registraion
 # Create two variations of the homepage.
 
 # One Test for the original template
-Test.objects.create(template_name="registraions/signup.html", experiment=exp)
+Test.objects.create(template_name="registrations/signup.html", experiment=exp)
 
 # Other Test for the New Variant
-Test.objects.create(template_name="registraions/new_signup.html", experiment=exp)
+Test.objects.create(template_name="registrations/new_signup.html", experiment=exp)
 ```
 Now You can run A/B Test on a view
 ```python

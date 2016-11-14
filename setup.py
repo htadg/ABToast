@@ -4,7 +4,7 @@ from setuptools import find_packages
 
 setup(
     name='django-abtoast',
-    version='1.0.2',
+    version='1.0.3',
     author='Hiten Sharma',
     author_email='sharmahiten3@gmail.com',
     packages=find_packages(),

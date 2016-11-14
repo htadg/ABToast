@@ -42,16 +42,29 @@ $ python manage.py migrate
 $ python manage.py createsuperuser
 ```
 Now Create your own new Tests in the Database
+```
+Note: You can also create New Experiment and Tests from the Django Admin Panel
+```
 ```python
+from datetime import date
+from dateutil.relativedelta import relativedelta
+
 from ABToast.models import Experiment, Test
 
+
+# Starting the Experiment from today
+start_date = date.today()
+# End Date for the Experiment
+# Experiment runs for two months
+end_date = start_date + relativedelta(months=+2)
+
 # Create an Experiment
-exp = Experiment.objects.create(name="Homepage Test", template_name="registraions/signup.html", goal="registrations/success")
+exp = Experiment.objects.create(name="Homepage Test", template_name="registraions/signup.html", goal="registrations/success", start=start_date, end=end_date, is_active=True)
 
 # Create two variations of the homepage.
 
 # One Test for the original template
-Test.objects.create(template_name="index.htmregistraions/signup.html",)
+Test.objects.create(template_name="registraions/signup.html", experiment=exp)
 
 # Other Test for the New Variant
 Test.objects.create(template_name="registraions/new_signup.html", experiment=exp)

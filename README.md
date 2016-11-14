@@ -62,16 +62,16 @@ end_date = start_date + relativedelta(months=+2)
 initial_traffic = 50 # 50%
 
 # Create an Experiment
-exp = Experiment.objects.create(name="Homepage Test", template_name="registraions/signup.html", goal="registrations/success", start=start_date, end=end_date, percentage=initial_traffic, is_active=True)
+exp = Experiment.objects.create(name="Homepage Test", template_name="registrations/signup.html", goal="registrations/success", start=start_date, end=end_date, is_active=True)
 
 # Create two variations of the homepage.
 # Currently User can only create two Test instances for a particular Experiment
 # which means currently user can run A/B Testing on only two variants of a Page
 # One Test for the original template
-Test.objects.create(template_name="registraions/signup.html", experiment=exp)
+Test.objects.create(template_name="registrations/signup.html", experiment=exp)
 
 # Other Test for the New Variant
-Test.objects.create(template_name="registraions/new_signup.html", experiment=exp)
+Test.objects.create(template_name="registrations/new_signup.html", experiment=exp)
 ```
 Now You can run A/B Test on a view
 ```python

@@ -38,11 +38,11 @@ class AB(object):
         except Experiment.DoesNotExist:
             return template_name
 
-        if not exp.is_active:
+        if exp.cancelled:
             return template_name
 
         key = exp.get_experiment_key()
-        if not self._is_experiment_converted(exp) and self._is_experiment_active(exp):
+        if self._is_experiment_active(exp):
             return self.request.session[key]["template"]
 
         test = self._get_test(exp)

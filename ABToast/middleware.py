@@ -8,9 +8,8 @@ class ABMiddleware(MiddlewareMixin):
     def process_request(self, request):
         request.ab = AB(request)
         if request.ab.is_active():
-            exps = Experiment.objects.all()
+            exps = Experiment.objects.filter(cancelled=False)
             for exp in exps:
-                exp.is_active = exp.get_status()
                 if exp.is_active:
                     exp.percentage = exp.get_updated_traffic()
                 exp.save()

@@ -13,6 +13,8 @@ $ pip install django-abtoast
 OR, Get ABToast locally
 ```sh
 $ git clone https://github.com/htadg/ABToast.git ABToast
+$ cd ABToast/
+$ python setup.py install
 ```
 
 Add ABToast to INSTALLED_APPS

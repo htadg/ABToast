@@ -64,7 +64,7 @@ end_date = start_date + relativedelta(months=+2)
 initial_traffic = 50 # 50%
 
 # Create an Experiment
-exp = Experiment.objects.create(name="Homepage Test", template_name="registrations/signup.html", goal="registrations/success", start=start_date, end=end_date, is_active=True)
+exp = Experiment.objects.create(name="Homepage Test", template_name="registrations/signup.html", goal="registrations/success", start=start_date, end=end_date, cancelled=True)
 
 # Create two variations of the homepage.
 # Currently User can only create two Test instances for a particular Experiment

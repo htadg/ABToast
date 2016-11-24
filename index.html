@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Abtoast by htadg</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Abtoast</h1>
+        <h2>ABToast is a simple A/B Testing app that is developed in Django.</h2>
+        <a href="https://github.com/htadg/ABToast" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="abtoast" class="anchor" href="#abtoast" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ABToast</h1>
+
+<p>ABToast is a simple A/B Testing app that is developed in django. This app implements the Django Session functionality to achieve the goal.</p>
+
+<h3>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h3>
+
+<p>ABToast requires <a href="https://www.djangoproject.com/download/">Django</a> to run.</p>
+
+<p>Install ABToast from pip</p>
+
+<div class="highlight highlight-source-shell"><pre>$ pip install django-abtoast</pre></div>
+
+<p>OR, Get ABToast locally</p>
+
+<div class="highlight highlight-source-shell"><pre>$ git clone https://github.com/htadg/ABToast.git ABToast
+$ <span class="pl-c1">cd</span> ABToast/
+$ python setup.py install</pre></div>
+
+<p>Add ABToast to INSTALLED_APPS</p>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-c1">INSTALLED_APPS</span> <span class="pl-k">=</span> (
+    <span class="pl-c"># Django Default Apps</span>
+    <span class="pl-s"><span class="pl-pds">'</span>django.contrib.admin<span class="pl-pds">'</span></span>,
+    <span class="pl-s"><span class="pl-pds">'</span>...<span class="pl-pds">'</span></span>,
+    <span class="pl-c"># ABToast</span>
+    <span class="pl-s"><span class="pl-pds">'</span>ABToast<span class="pl-pds">'</span></span>,
+)</pre></div>
+
+<p>Add ABToast.middleware.ABMiddleware to the project middlewares</p>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-c1">MIDDLEWARE_CLASSES</span> <span class="pl-k">=</span> (
+    <span class="pl-s"><span class="pl-pds">'</span>django.contrib.sessions.middleware.SessionMiddleware<span class="pl-pds">'</span></span>,
+    <span class="pl-s"><span class="pl-pds">'</span>django.middleware.common.CommonMiddleware<span class="pl-pds">'</span></span>,
+    <span class="pl-s"><span class="pl-pds">'</span>...<span class="pl-pds">'</span></span>,
+    <span class="pl-c"># Custom Middleware</span>
+    <span class="pl-s"><span class="pl-pds">'</span>ABToast.middleware.ABMiddleware<span class="pl-pds">'</span></span>,
+)</pre></div>
+
+<p>Migrate the database and create admin account</p>
+
+<div class="highlight highlight-source-shell"><pre>$ python manage.py makemigrations
+$ python manage.py migrate
+$ python manage.py createsuperuser</pre></div>
+
+<p>Now Create your own new Tests in the Database</p>
+
+<pre><code>Note: You can also create New Experiment and Tests from the Django Admin Panel
+</code></pre>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-k">from</span> datetime <span class="pl-k">import</span> datetime
+<span class="pl-k">from</span> dateutil.relativedelta <span class="pl-k">import</span> relativedelta
+
+<span class="pl-k">from</span> ABToast.models <span class="pl-k">import</span> Experiment, Test
+
+
+<span class="pl-c"># Starting the Experiment from today</span>
+start_date <span class="pl-k">=</span> datetime.now()
+<span class="pl-c"># End Date for the Experiment</span>
+<span class="pl-c"># Experiment runs for two months</span>
+end_date <span class="pl-k">=</span> start_date <span class="pl-k">+</span> relativedelta(<span class="pl-v">months</span><span class="pl-k">=</span><span class="pl-k">+</span><span class="pl-c1">2</span>)
+
+<span class="pl-c"># Initial Traffic Redirect for the first variant</span>
+initial_traffic <span class="pl-k">=</span> <span class="pl-c1">50</span> <span class="pl-c"># 50%</span>
+
+<span class="pl-c"># Create an Experiment</span>
+exp <span class="pl-k">=</span> Experiment.objects.create(<span class="pl-v">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Homepage Test<span class="pl-pds">"</span></span>, <span class="pl-v">template_name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>registrations/signup.html<span class="pl-pds">"</span></span>, <span class="pl-v">goal</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>registrations/success<span class="pl-pds">"</span></span>, <span class="pl-v">start</span><span class="pl-k">=</span>start_date, <span class="pl-v">end</span><span class="pl-k">=</span>end_date, <span class="pl-v">cancelled</span><span class="pl-k">=</span><span class="pl-c1">False</span>)
+
+<span class="pl-c"># Create two variations of the homepage.</span>
+<span class="pl-c"># Currently User can only create two Test instances for a particular Experiment</span>
+<span class="pl-c"># which means currently user can run A/B Testing on only two variants of a Page</span>
+<span class="pl-c"># One Test for the original template</span>
+Test.objects.create(<span class="pl-v">template_name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>registrations/signup.html<span class="pl-pds">"</span></span>, <span class="pl-v">experiment</span><span class="pl-k">=</span>exp)
+
+<span class="pl-c"># Other Test for the New Variant</span>
+Test.objects.create(<span class="pl-v">template_name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>registrations/new_signup.html<span class="pl-pds">"</span></span>, <span class="pl-v">experiment</span><span class="pl-k">=</span>exp)</pre></div>
+
+<p>Now You can run A/B Test on a view</p>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-k">def</span> <span class="pl-en">home</span>(<span class="pl-smi">request</span>, <span class="pl-smi">template_name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>registrations/signup.html<span class="pl-pds">"</span></span>):
+    <span class="pl-k">try</span>:
+        template_name <span class="pl-k">=</span> request.ab.run(template_name)
+    <span class="pl-k">except</span> TemplateDoesNotExist:
+        <span class="pl-k">pass</span>
+    <span class="pl-k">return</span> render_to_response(template_name)</pre></div>
+
+<h3>
+<a id="development" class="anchor" href="#development" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Development</h3>
+
+<p>Want to contribute? Great!</p>
+
+<p>Do the necessary changes that you feel and send a pull request.</p>
+
+<h3>
+<a id="todos" class="anchor" href="#todos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Todos</h3>
+
+<ul>
+<li>[ ] Multivariate Testing</li>
+<li>[ ] Add Graphical Information</li>
+<li>[ ] Add Bayesian Formula for the Conversion Rates</li>
+</ul>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
+
+<p>MIT</p>
+
+<p><strong>Free Software, Hell Yeah!</strong></p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/htadg/ABToast/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/htadg/ABToast/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/htadg/ABToast"></a> is maintained by <a href="https://github.com/htadg">htadg</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
